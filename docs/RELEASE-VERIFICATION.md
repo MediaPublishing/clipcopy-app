@@ -37,3 +37,9 @@ Developer ID signing and Apple notarization remain pending the required signing 
 - Apple accepted submission `a6c71b78-baeb-423b-9e6e-56223076afb3`. The ticket was stapled before final ZIP creation. A separate copy extracted from the final ZIP passed strict codesign verification, stapler validation and Gatekeeper assessment (`source=Notarized Developer ID`). The app was not normally launched or installed during verification.
 - The ZIP contains only the app bundle and macOS archive metadata. No user archives, credentials, private resources or logs are included. Size: 221910 bytes. SHA-256: `661c8722d5c51e72a9c43805ec26768885b914184b94b9587e0f40967cecd0a2`.
 - German and English download links and installation text now target 0.1.1. Static HTML/source guards and the staged secret scan passed. No layout, feature, dependency or license change was introduced. The v0.1.0 package is preserved byte-for-byte as a rollback download.
+
+### Published 0.1.1 readback
+
+Release source/documentation commit: `d5f192d76c25de285183da2a4830a8a8b3581039`. Checks passed: https://github.com/MediaPublishing/clipcopy-app/actions/runs/41527233412. Public prerelease: https://github.com/MediaPublishing/clipcopy-app/releases/tag/v0.1.1.
+
+Cloudflare production deployment `379c6cec` succeeded with 12 allowlisted static files. Both https://clipcopy.pages.dev/ and https://clipcopy.pages.dev/en/ matched the generated HTML bytes and link to the signed 0.1.1 ZIP. The anonymous GitHub download matched SHA-256 `661c8722d5c51e72a9c43805ec26768885b914184b94b9587e0f40967cecd0a2` exactly (221910 bytes). Its extracted app independently passed strict signature verification, ticket validation and Gatekeeper (`Notarized Developer ID`). The installed app, clipboard and existing history were not accessed or replaced.

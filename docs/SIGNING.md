@@ -1,6 +1,6 @@
 # Developer ID release preparation
 
-The current v0.1.0 download is still ad-hoc signed and is not notarized. The release helper below does not change that fact until all checks succeed and a new asset is published.
+Version 0.1.1 is Developer ID signed and Apple notarized. Its ticket is stapled to the app. Strict signature verification, ticket validation and Gatekeeper assessment passed on a copy extracted from the final ZIP. Version 0.1.0 remains available as the historical ad-hoc signed, non-notarized prerelease.
 
 Prerequisites on the signing Mac:
 

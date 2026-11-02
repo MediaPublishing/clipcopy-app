@@ -29,3 +29,11 @@ Current public page/product text no longer mentions the previous reference produ
 The reviewed preparation commit is `b62d191bcfbec86f8bdaa2af90eff66880d3dc54`; its GitHub Checks run passed: https://github.com/MediaPublishing/clipcopy-app/actions/runs/41494728118. Local native build and all 24 synthetic tests passed. The signing helper was tested with absent/invalid identity configuration and stopped without changing existing release artifacts.
 
 Developer ID signing and Apple notarization remain pending the required signing identity and notarization access. No new signed artifact has been published; v0.1.0 and its checksum remain unchanged. See SIGNING.md for the prepared fail-closed workflow.
+
+## Developer ID release 0.1.1 (November 2)
+
+- App and test source are unchanged from the successful baseline CI run: https://github.com/MediaPublishing/clipcopy-app/actions/runs/41495549446. That run includes the 24 synthetic tests. The new local native release build passed. A local full-suite rerun could not write a named test pasteboard in restricted execution; elevated execution was rejected by automatic review and was not bypassed. No new local full-suite success is claimed.
+- Version 0.1.1 was signed with the existing Developer ID Application identity for Reto Stuber Global Headquarters LLC, team F7ZC4PZ39V, hardened runtime and a secure timestamp. The signed executable passed its synthetic self-check without archive or Keychain access.
+- Apple accepted submission `a6c71b78-baeb-423b-9e6e-56223076afb3`. The ticket was stapled before final ZIP creation. A separate copy extracted from the final ZIP passed strict codesign verification, stapler validation and Gatekeeper assessment (`source=Notarized Developer ID`). The app was not normally launched or installed during verification.
+- The ZIP contains only the app bundle and macOS archive metadata. No user archives, credentials, private resources or logs are included. Size: 221910 bytes. SHA-256: `661c8722d5c51e72a9c43805ec26768885b914184b94b9587e0f40967cecd0a2`.
+- German and English download links and installation text now target 0.1.1. Static HTML/source guards and the staged secret scan passed. No layout, feature, dependency or license change was introduced. The v0.1.0 package is preserved byte-for-byte as a rollback download.

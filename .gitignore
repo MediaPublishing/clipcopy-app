@@ -20,3 +20,4 @@ local-data/
 
 releases/
 receipts/
+.wrangler/

@@ -1,11 +1,14 @@
-# ClipCopy 0.1.0 beta
+# ClipCopy 0.1.1 beta
 
-First clean public source baseline and Apple Silicon download. macOS 15.4+.
+Developer ID signed by Reto Stuber Global Headquarters LLC and notarized by Apple. The notarization ticket is stapled to the app. Strict signature verification, ticket validation and Gatekeeper assessment passed on the final packaged app.
 
-Includes a native text history menu, manual paste, count limits, excluded apps, pause, optional login start and encrypted local persistence. Recording and login start are opt-in. No private development history, migration feature, original vendor resources, user archive or credentials are included.
+- Same clipboard, encrypted storage and menu behavior as 0.1.0; no history migration or new features.
+- Apple Silicon arm64, macOS 15.4 or newer.
+- Manual updates. Quit ClipCopy before replacing the app bundle. macOS may request confirmation or clipboard/Keychain access after replacement.
+- No Intel build, automatic updates, global hotkey, images, files or cloud sync.
 
-The app is ad-hoc signed, has no Developer ID signature and is not notarized. Installation may require macOS approval. Intel, automated updates, a global hotkey, images, files and cloud sync are not supported. See README and PRIVACY for clipboard access, encryption-key and filtering limits.
+Download `ClipCopy-0.1.1-arm64.zip` and compare it with `SHA256SUMS-0.1.1.txt` from the same GitHub release. The old v0.1.0 prerelease remains available as a rollback package and is ad-hoc signed, not notarized.
 
-Copyright © 2026 MediaPublishing. Publicly viewable source; no usage license has been granted. This release is not represented as open-source licensed.
+See README and PRIVACY for encryption-key and capture-filter limitations. Publicly viewable source; no usage license granted.
 
-Release checks are recorded in RELEASE-VERIFICATION.md. SHA256SUMS.txt accompanies the downloadable ZIP. GitHub Actions independently rebuilds and runs synthetic checks; the prebuilt local ZIP is verified separately.
+SHA-256: `661c8722d5c51e72a9c43805ec26768885b914184b94b9587e0f40967cecd0a2`

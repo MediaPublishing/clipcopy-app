@@ -2,13 +2,13 @@
 
 A native macOS menu bar utility for reusing copied text. Select a history entry, then paste with Cmd+V. Text history is encrypted locally with a key in macOS Keychain. No account, telemetry or cloud sync.
 
-[Website](https://clipcopy.pages.dev/) · [English](https://clipcopy.pages.dev/en/) · [Download beta](https://github.com/MediaPublishing/clipcopy-app/releases/tag/v0.1.0)
+[Website](https://clipcopy.pages.dev/) · [English](https://clipcopy.pages.dev/en/) · [Download beta](https://github.com/MediaPublishing/clipcopy-app/releases/tag/v0.1.1)
 
 ## Beta requirements and setup
 
 - Apple Silicon, macOS 15.4 or newer. Intel builds are not included.
 - Download the release ZIP, extract it and move ClipCopy.app to Applications.
-- This beta is ad-hoc signed, **not** Developer ID signed or Apple notarized. macOS may block the first launch. Review the source and [Apple’s opening guidance](https://support.apple.com/102445) before proceeding.
+- Version 0.1.1 is Developer ID signed and Apple notarized, with the notarization ticket stapled to the app. macOS may still ask you to confirm opening a downloaded app and grant clipboard access.
 - In Preferences… → General, enable **Record clipboard history**. Allow clipboard access if requested. If needed, choose persistent access in System Settings → Privacy & Security → Clipboard, then enable recording again. Only new copies are captured.
 - Quit other clipboard apps before enabling recording. Launch at login is optional.
 

@@ -138,7 +138,8 @@ public struct SettingsView: NSViewRepresentable {
             icon.image = NSImage(systemSymbolName: "paperclip", accessibilityDescription: "ClipCopy"); icon.imageScaling = .scaleProportionallyUpOrDown; about.addSubview(icon)
             let title = NSTextField(labelWithString: "ClipCopy"); title.font = .boldSystemFont(ofSize: 18)
             title.frame = NSRect(x: 160,y: 122,width: 240,height: 22); about.addSubview(title)
-            let version = NSTextField(labelWithString: "Version 0.1.0"); version.font = .systemFont(ofSize: 12)
+            let versionNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0.1.0"
+            let version = NSTextField(labelWithString: "Version " + versionNumber); version.font = .systemFont(ofSize: 12)
             version.frame = NSRect(x: 160,y: 102,width: 240,height: 16); about.addSubview(version)
             let copyright = NSTextField(labelWithString: "© MediaPublishing"); copyright.font = .systemFont(ofSize: 11)
             copyright.frame = NSRect(x: 160,y: 86,width: 240,height: 16); about.addSubview(copyright)

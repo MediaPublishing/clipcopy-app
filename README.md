@@ -2,7 +2,7 @@
 
 A native macOS menu bar utility for reusing copied text. Select a history entry, then paste with Cmd+V. Text history is encrypted locally with a key in macOS Keychain. No account, telemetry or cloud sync.
 
-[Website](https://mediapublishing.github.io/clipcopy-app/) · [English](https://mediapublishing.github.io/clipcopy-app/en/) · [Download beta](https://github.com/MediaPublishing/clipcopy-app/releases/latest)
+[Website](https://mediapublishing.github.io/clipcopy-app/) · [English](https://mediapublishing.github.io/clipcopy-app/en/) · [Download beta](https://github.com/MediaPublishing/clipcopy-app/releases/tag/v0.1.0)
 
 ## Beta requirements and setup
 

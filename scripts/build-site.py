@@ -1,11 +1,12 @@
 from pathlib import Path
-import shutil
+import os
+from urllib.parse import urlparse
 
 root = Path(__file__).resolve().parent.parent
 site = root / 'docs'
 (site / 'en').mkdir(exist_ok=True)
-base = 'https://mediapublishing.github.io/clipcopy-app/'
-prefix = '/clipcopy-app/'
+base = os.environ.get('CLIPCOPY_SITE_URL', 'https://clipcopy.pages.dev/').rstrip('/') + '/'
+prefix = urlparse(base).path
 repo = 'https://github.com/MediaPublishing/clipcopy-app'
 download = repo + '/releases/download/v0.1.0/ClipCopy-0.1.0-arm64.zip'
 translations = {
@@ -30,10 +31,9 @@ translations = {
         'faqtitle': 'Vor dem ersten Start.',
         'faq': [
             ('Was speichert die Beta?', 'Text aus der Zwischenablage. Rich Text wird als Klartext übernommen, wenn die Quelle eine Textdarstellung anbietet. Bilder, Dateien, Cloud-Sync, automatisches Einfügen und ein globaler Tastaturkurzbefehl sind nicht enthalten.'),
-            ('Wie schalte ich die Aufnahme ein?', 'Öffne Preferences… → General und aktiviere Record clipboard history. Erlaube den Zwischenablagezugriff in macOS, falls danach gefragt wird. Wähle bei Bedarf die dauerhafte Freigabe unter Systemeinstellungen → Datenschutz & Sicherheit → Zwischenablage und schalte die Aufnahme erneut ein. Erst die nächste neue Kopie wird erfasst. CopyClip muss vorher beendet sein; paralleler Betrieb verhindert den Aufnahmestart.'),
+            ('Wie schalte ich die Aufnahme ein?', 'Öffne Preferences… → General und aktiviere Record clipboard history. Erlaube den Zwischenablagezugriff in macOS, falls danach gefragt wird. Wähle bei Bedarf die dauerhafte Freigabe unter Systemeinstellungen → Datenschutz & Sicherheit → Zwischenablage und schalte die Aufnahme erneut ein. Erst die nächste neue Kopie wird erfasst. Beende andere Zwischenablage-Apps vor dem Einschalten der Aufnahme.'),
             ('Sind sensible Texte immer geschützt?', 'Bekannte Passwortmanager und vertraulich markierte Kopien werden übersprungen. ClipCopy kann nicht jeden sensiblen Text erkennen. Pausiere die Aufnahme oder schließe die jeweilige App aus, wenn du dort vertrauliche Texte kopierst.'),
-            ('Was muss ich zur Beta wissen?', 'Apple Silicon und macOS 15.4 oder neuer. Die Beta ist ad hoc signiert, nicht mit einer Apple Developer ID signiert und nicht von Apple notarisiert. Updates installierst du manuell. Bei Verlust des lokalen Schlüsselbundschlüssels ist der Verlauf nicht automatisch wiederherstellbar.'),
-            ('Ist das CopyClip?', 'Nein. ClipCopy ist eigenständig implementiert und steht in keiner Verbindung zu FIPLAB oder CopyClip. Diese öffentliche Beta enthält keinen Import fremder Verläufe. Einige ursprünglich nachempfundene Anbieter-Menüpunkte sind deaktiviert.')],
+            ('Was muss ich zur Beta wissen?', 'Apple Silicon und macOS 15.4 oder neuer. Die Beta ist ad hoc signiert, nicht mit einer Apple Developer ID signiert und nicht von Apple notarisiert. Updates installierst du manuell. Bei Verlust des lokalen Schlüsselbundschlüssels ist der Verlauf nicht automatisch wiederherstellbar.')],
         'downloadtitle': 'Einmal kopiert.<br>Nochmal verwenden.', 'installtitle': 'So startest du die Beta.',
         'install': ['ZIP herunterladen, entpacken und ClipCopy.app nach „Programme“ ziehen.', 'ClipCopy öffnen. Falls macOS die Beta blockiert: Datenschutz & Sicherheit prüfen und nur bei vertrauter Quelle „Dennoch öffnen“ wählen.', 'Unter Preferences… die Aufnahme einschalten und den Zwischenablagezugriff freigeben. Start bei Anmeldung ist optional.'],
         'apple': 'Apples Hinweise zum ersten Start', 'notes': 'Versionshinweise & Prüfsumme',
@@ -58,10 +58,9 @@ translations = {
         'historycaption': 'Our ClipCopy demo. All text shown is synthetic.', 'faqtitle': 'Before you get started.',
         'faq': [
             ('What does the beta store?', 'Text from the clipboard. Rich text is captured as plain text when the source offers a text representation. Images, files, cloud sync, automatic pasting and a global keyboard shortcut are not included.'),
-            ('How do I enable recording?', 'Open Preferences… → General and enable Record clipboard history. Allow clipboard access in macOS if prompted. If needed, choose persistent clipboard access under System Settings → Privacy & Security → Clipboard, then enable recording again. Recording begins with your next new copy. Quit CopyClip first; running it alongside ClipCopy prevents recording from starting.'),
+            ('How do I enable recording?', 'Open Preferences… → General and enable Record clipboard history. Allow clipboard access in macOS if prompted. If needed, choose persistent clipboard access under System Settings → Privacy & Security → Clipboard, then enable recording again. Recording begins with your next new copy. Quit other clipboard apps before enabling recording.'),
             ('Are sensitive copies always protected?', 'Known password managers and copies marked as confidential are skipped. ClipCopy cannot detect every sensitive text. Pause recording or exclude an app before copying confidential information there.'),
-            ('What should I know about the beta?', 'Apple Silicon and macOS 15.4 or newer. The beta is ad-hoc signed, has no Apple Developer ID signature and is not notarized by Apple. Updates are manual. A lost local Keychain key cannot be automatically recovered.'),
-            ('Is this CopyClip?', 'No. ClipCopy is independently implemented and is not affiliated with FIPLAB or CopyClip. This public beta does not import other clipboard histories. Some originally modelled vendor menu items remain disabled.')],
+            ('What should I know about the beta?', 'Apple Silicon and macOS 15.4 or newer. The beta is ad-hoc signed, has no Apple Developer ID signature and is not notarized by Apple. Updates are manual. A lost local Keychain key cannot be automatically recovered.')],
         'downloadtitle': 'Copy it once.<br>Use it again.', 'installtitle': 'Getting started with the beta.',
         'install': ['Download and extract the ZIP, then move ClipCopy.app to Applications.', 'Open ClipCopy. If macOS blocks the beta, review Privacy & Security and only choose Open Anyway if you trust the source.', 'Enable recording in Preferences… and grant clipboard access. Launch at login is optional.'],
         'apple': 'Apple’s guide to opening apps', 'notes': 'Release notes & checksum',
@@ -77,6 +76,7 @@ def picture(name, alt):
 
 for lang, c in translations.items():
     canonical = base + ('en/' if lang == 'en' else '')
+    prefix = '../' if lang == 'en' else './'
     nav = ''.join(f'<a href="#{id}">{label}</a>' for id, label in zip(['workflow', 'local', 'questions'], c['nav']))
     langs = ''.join(f'<a href="{prefix + ("en/" if l == "en" else "")}" lang="{l}" hreflang="{l}" {"aria-current=page" if l == lang else ""}>{l.upper()}</a>' for l in ['de', 'en'])
     steps = ''.join(f'<li><span class="number">0{i+1}</span><h3>{a}</h3><p>{b}</p></li>' for i, (a, b) in enumerate(c['steps']))

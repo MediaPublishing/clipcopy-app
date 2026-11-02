@@ -1,6 +1,6 @@
 from pathlib import Path
 from html.parser import HTMLParser
-import json, re, sys
+import json, re, sys, os
 root=Path(__file__).resolve().parent.parent
 failures=[]
 class Page(HTMLParser):
@@ -23,13 +23,20 @@ class Page(HTMLParser):
 for lang,path in [("de","docs/index.html"),("en","docs/en/index.html")]:
     page=Page();page.feed((root/path).read_text())
     if page.lang!=lang or page.h1!=1 or page.scripts: failures.append("html-contract-"+lang)
-    expected="https://mediapublishing.github.io/clipcopy-app/"+("en/" if lang=="en" else "")
+    base=os.environ.get("CLIPCOPY_SITE_URL","https://clipcopy.pages.dev/").rstrip("/")+"/"
+    from urllib.parse import urlparse, urljoin
+    prefix=urlparse(base).path
+    expected=base+("en/" if lang=="en" else "")
     if page.canonical!=expected: failures.append("canonical-"+lang)
+    if re.search(r"CopyClip|FIPLAB|nachempfunden|modelled",(root/path).read_text()): failures.append("competitor-reference-"+lang)
     for link in page.links:
         if link.startswith("#") and link[1:] not in page.ids: failures.append("broken-anchor")
     for asset in page.assets:
-        if not asset.startswith("/clipcopy-app/"): failures.append("external-asset")
-        elif not (root/"docs"/asset.removeprefix("/clipcopy-app/")).is_file(): failures.append("missing-asset")
+        resolved=urlparse(urljoin(expected,asset))
+        if resolved.netloc!=urlparse(base).netloc: failures.append("external-asset")
+        else:
+            local=(root/"docs"/resolved.path.removeprefix(prefix)).resolve()
+            if not local.is_relative_to((root/"docs").resolve()) or not local.is_file(): failures.append("missing-asset")
 for folder in ["Sources","Tests","scripts","docs"]:
     for path in (root/folder).rglob("*"):
         if not path.is_file(): continue

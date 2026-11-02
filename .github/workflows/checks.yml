@@ -1,0 +1,16 @@
+name: Checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  macos:
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and verify app bundles
+        run: scripts/build.sh
+      - name: Synthetic tests
+        run: scripts/test.sh
+      - name: Public source and website guard
+        run: python3 scripts/verify-public.py
